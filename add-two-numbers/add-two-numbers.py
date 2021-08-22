@@ -12,13 +12,12 @@ class Solution:
                 r += 1
                 summed -= 10
             if not result:
-                result = ListNode(summed)
-                res = result
+                result = res = ListNode(summed)
             else:
                 res.next = ListNode(summed)
                 res = res.next
             if (not x.next) and (not y.next) and (not r):
                 return result
             else:
-                return sum(x.next or ListNode(0, None), y.next or ListNode(0, None), result, res, r)
+                return sum(x.next or ListNode(), y.next or ListNode(), result, res, r)
         return sum(l1, l2)
