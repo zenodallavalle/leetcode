@@ -1,27 +1,36 @@
 class Solution:
     def myAtoi(self, s: str) -> int:
-        
-        def checkOverflow(x: int) -> int:
-            if x > (2**31-1):
-                return 2**31 - 1
-            elif x < (-2**31):
-                return -2**31
-            return x
-        
-        digits = '0'
-        for c in s:
-            if digits != '0':
-                if '0'<=c<='9':
-                    digits += c
+        number = 0
+        found_valid_chars = False
+        negative = None
+        i = 0
+        while i < len(s):
+            c = s[i]
+            if '0' <= c <= '9':
+                found_valid_chars = True
+                if not negative:
+                    if number <= (2**31-1-int(c))/10:
+                        number = number*10 + int(c)
+                    else:
+                        return 2**31-1
                 else:
-                    return checkOverflow(int(digits))
+                    if number >= (-2**31+int(c))/10:
+                        number = number *10 - int(c)
+                    else:
+                        return -2**31
             else:
-                if c == '+' or c == '-':
-                    digits = c + digits
-                elif '0' <= c <= '9':
-                    digits += c
+                if found_valid_chars:
+                    # Didn't recognized a number and already removed leading ' ' so break it
+                    break
+                elif c == '+':
+                    negative = False
+                    found_valid_chars = True
+                elif c == '-':
+                    negative = True
+                    found_valid_chars = True
                 elif c == ' ':
                     pass
                 else:
-                    return checkOverflow(int(digits))
-        return checkOverflow(int(digits))
+                    break
+            i+=1
+        return number
