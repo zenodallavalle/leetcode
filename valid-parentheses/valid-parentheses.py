@@ -8,11 +8,11 @@ class Solution:
                 if not parentheses:
                     return False
                 elif c == '}' and '{' == parentheses[-1]:
-                    parentheses = parentheses[:-1]
+                    parentheses.pop()
                 elif c == ']' and '[' == parentheses[-1]:
-                    parentheses = parentheses[:-1]
+                    parentheses.pop()
                 elif c == ')' and '(' == parentheses[-1]:
-                    parentheses = parentheses[:-1]
+                    parentheses.pop()
                 else:
                     return False
         return len(parentheses) == 0
