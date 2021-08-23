@@ -1,11 +1,11 @@
 class Solution:
     def isValid(self, s: str) -> bool:
-        parentheses = ''
+        parentheses = []
         for c in s:
             if c in ['{', '[', '(']:
-                parentheses += c
+                parentheses.append(c)
             else:
-                if len(parentheses) == 0:
+                if not parentheses:
                     return False
                 elif c == '}' and '{' == parentheses[-1]:
                     parentheses = parentheses[:-1]
