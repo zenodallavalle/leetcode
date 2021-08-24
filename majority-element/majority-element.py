@@ -16,14 +16,26 @@ class Solution:
         #         ht[n] = updated
     
         # Third solution space O(1) time O(nlog(n))
-        nums = sorted(nums)
-        threshold = len(nums)/2
-        start = 0
-        i = 0
-        while i<len(nums):
-            if nums[start] != nums[i]:
-                start = i
+        # nums = sorted(nums)
+        # threshold = len(nums)/2
+        # start = 0
+        # i = 0
+        # while i<len(nums):
+        #     if nums[start] != nums[i]:
+        #         start = i
+        #     else:
+        #         if (i - start + 1) > threshold:
+        #             return nums[i]
+        #     i+=1
+        # Correct Solution: Boyer Moore's Algorithm Time O(N) Space O(1)
+        res = nums[0]
+        count = 1
+        for n in nums[1:]:
+            if n == res:
+                count += 1
             else:
-                if (i - start + 1) > threshold:
-                    return nums[i]
-            i+=1
+                count -= 1
+                if count == 0:
+                    res = n
+                    count = 1
+        return res
